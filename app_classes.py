@@ -1,4 +1,5 @@
-# from cls_livro import Livro
+from cls_utilidades import Utilidades
+
 class Livro:
     def __init__(self, id:str,titulo:str,autor:str) -> None:
         self._id = id
@@ -13,6 +14,14 @@ class Livro:
     @esta_emprestado.setter
     def esta_emprestado(self, novo_status:bool):
         self._esta_emprestado = novo_status
+        
+    def to_dict(self) -> dict:
+        dict_livro = {
+            'id':self._id,
+            'titulo': self.titulo,
+            'autor':self.autor
+        }
+        return dict_livro
 
 class Membro:
     def __init__(self,id:str,nome:str) -> None:
@@ -22,14 +31,35 @@ class Membro:
     
 class Biblioteca:
     def __init__(self) -> None:
-        self.catalago = list[Livro]
-        self.membros = list[Livro]
+        self.catalago = []
+        self.membros  = []
     
-    def adicionar_livro(self,novo_livro:Livro) ->None:
+    def adicionar_livro_catalago(self,novo_livro:Livro) ->None:
         self.catalago.append(novo_livro)
     
     def adicionar_membro(self,novo_membro:Membro) -> None:
         self.membros.append(novo_membro)
+        
+    def cadastrar_novo_livro(self, livro_info:dict) -> tuple:
+        util = Utilidades()
+        
+        proximo_id = util.get_next_id(self.catalago)
+        if proximo_id == None:
+            proximo_id = 'l-0001'
+        titulo = livro_info.get('titulo')
+        autor = livro_info.get('autor')
+        if titulo == None or autor == None:
+            return (False,'Umas das informações necessárias para o livro está incorreta')
+        else:
+            novo_livro = Livro(proximo_id,titulo,autor)
+            self.adicionar_livro_catalago(novo_livro)
+            return (True,'Cadastrado com sucesso')
+    
+
+            
+        
+
+        
     
     
 
