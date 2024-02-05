@@ -71,6 +71,17 @@ membros = [
         'id':'m-0002',
         'nome':'Bi',
         'hist_livros':[]
+    },
+    
+    {
+        'id':'m-0003',
+        'nome':'Marina',
+        'hist_livros':[]
+    },
+    {
+        'id':'m-0004',
+        'nome':'Edna',
+        'hist_livros':[]
     }
 
 ]
