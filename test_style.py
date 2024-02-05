@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import customtkinter as ctk
 from app_classes import Biblioteca,Membro,Livro,Item
 
 class BibliotecaAPP:
@@ -7,7 +8,8 @@ class BibliotecaAPP:
         
         self.bibli_obj = biblioteca
         
-        self.root = tk.Tk()
+        # self.root = tk.Tk()
+        self.root = ctk.CTk()
         
         self.novo_membro_nome = tk.StringVar()
         self.novo_titulo = tk.StringVar()
@@ -21,6 +23,7 @@ class BibliotecaAPP:
     def configurar_main_wnd(self):
         self.root.title('Biblioteca')
         self.root.geometry('400x300')
+        ctk.set_appearance_mode('dark')
         
     def configurar_child_wnd(self,wnd_nome:tk.Toplevel):
         wnd_nome.geometry('400x300')
@@ -30,8 +33,9 @@ class BibliotecaAPP:
     def bibli_main_wnd(self) -> None:
         
         #Criando elementos pagina home
-        btn_open_cadastro = ttk.Button(self.root, text='Cadastro', command=self.abrir_cadastro_wnd)
-        btn_open_pesquisa_wnd = ttk.Button(self.root,text='Pesquisar')
+        # btn_open_cadastro = ttk.Button(self.root, text='Cadastro', command=self.abrir_cadastro_wnd)
+        btn_open_cadastro = ctk.CTkButton(self.root, text='Cadastro', command=self.abrir_cadastro_wnd)
+        btn_open_pesquisa_wnd = ctk.CTkButton(self.root,text='Pesquisar')
         
         #Mostrando elementos
         btn_open_cadastro.grid(row=0,column=0,columnspan=2)
@@ -42,23 +46,23 @@ class BibliotecaAPP:
     #Janela de cadastro livro e membro
     #Janela cadastro
     def abrir_cadastro_wnd(self):
-        cadastro_wnd = tk.Toplevel(self.root)   
+        cadastro_wnd = ctk.CTkToplevel(self.root)   
         cadastro_wnd.title('Biblioteca cadastro')
         self.configurar_child_wnd(cadastro_wnd)
         
         #Conteúdo cadastro
-        cadastro_notebook = ttk.Notebook(cadastro_wnd,width=320,height=190)
+        cadastro_notebook = ctk.CTkTabview(cadastro_wnd,width=320,height=190)
         
-        tab_cad_membro = tk.Frame(cadastro_notebook,relief='solid',borderwidth=1,width=1)
-        tab_cad_livro = tk.Frame(cadastro_notebook,relief='solid',borderwidth=1,width=1)
+        tab_cad_membro = ctk.CTkFrame(cadastro_notebook)
+        tab_cad_livro = ctk.CTkFrame(cadastro_notebook)
         
         #Tab cadastro membro:
         #config elementros
-        lbl_nome = ttk.Label(tab_cad_membro,text='Nome:')
-        tx_in_novo_nome = ttk.Entry(tab_cad_membro,textvariable=self.novo_membro_nome)
-        lbl_result = ttk.Label(tab_cad_membro,textvariable=self.wnd_cad_membro_result)
-        btn_cad_membro = ttk.Button(tab_cad_membro,text='Cadastrar membro',command=self.but_cadastrar_membro)
-        btn_cad_clear_membro_wnd = ttk.Button(tab_cad_membro,text='Novo Cadastro',command=self.but_clear_membro_wnd)
+        lbl_nome = ctk.CTkLabel(tab_cad_membro,text='Nome:')
+        tx_in_novo_nome = ctk.CTkEntry(tab_cad_membro,textvariable=self.novo_membro_nome)
+        lbl_result = ctk.CTkLabel(tab_cad_membro,textvariable=self.wnd_cad_membro_result)
+        btn_cad_membro = ctk.CTkButton(tab_cad_membro,text='Cadastrar membro',command=self.but_cadastrar_membro)
+        btn_cad_clear_membro_wnd = ctk.CTkButton(tab_cad_membro,text='Novo Cadastro',command=self.but_clear_membro_wnd)
         
         #Mostrando elementos:
         lbl_nome.grid(row=0,column=0)
@@ -69,12 +73,12 @@ class BibliotecaAPP:
         
         #Tab cadastro livro:
         #config elementos
-        lbl_titulo = ttk.Label(tab_cad_livro,text='Titulo:')
-        tx_in_novo_titulo = ttk.Entry(tab_cad_livro,textvariable=self.novo_titulo)
-        lbl_autor = ttk.Label(tab_cad_livro,text='Autor:')
-        tx_in_novo_autor = ttk.Entry(tab_cad_livro,textvariable=self.novo_autor)
-        btn_cad_livro = ttk.Button(tab_cad_livro,text='Cadastrar livro', command=self.but_cadastrar_livro)
-        lbl_cad_livro_result = ttk.Label(tab_cad_livro,textvariable=self.wnd_cad_livro_result)
+        lbl_titulo = ctk.CTkLabel(tab_cad_livro,text='Titulo:')
+        tx_in_novo_titulo = ctk.CTkEntry(tab_cad_livro,textvariable=self.novo_titulo)
+        lbl_autor =ctk.CTkLabel(tab_cad_livro,text='Autor:')
+        tx_in_novo_autor = ctk.CTkEntry(tab_cad_livro,textvariable=self.novo_autor)
+        btn_cad_livro = ctk.CTkButton(tab_cad_livro,text='Cadastrar livro', command=self.but_cadastrar_livro)
+        lbl_cad_livro_result = ctk.CTkLabel(tab_cad_livro,textvariable=self.wnd_cad_livro_result)
 
         #Mostrando elementos
         lbl_titulo.grid(row=0,column=0)
