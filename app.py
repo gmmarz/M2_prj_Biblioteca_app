@@ -92,6 +92,11 @@ class BibliotecaAPP:
      
     def abrir_pesquisa_wnd(self):
         pesquisa_wnd = tk.Toplevel(self.root)
+        pesquisa_wnd.title('Pesquisa')
+        self.configurar_child_wnd(pesquisa_wnd)
+
+        #Pesquisa Livros:
+        # pesquisa_notebook = 
     #==========================================================================================================
     
     #Funcções de botões da tela de cadastro.
