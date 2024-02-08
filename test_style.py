@@ -26,7 +26,19 @@ class BibliotecaAPP:
         ctk.set_appearance_mode('dark')
         
     def configurar_child_wnd(self,wnd_nome:tk.Toplevel):
-        wnd_nome.geometry('400x300')
+        # wnd_nome.geometry('800x600')
+        main_wnd_position = self.root.winfo_rootx(), self.root.winfo_rooty()
+        main_wnd_width = self.root.winfo_width()
+        main_wnd_height = self.root.winfo_height()
+        
+        child_width = 400
+        child_height = 300
+        
+        child_pos_x = main_wnd_position[0] + main_wnd_width
+        child_pos_y = main_wnd_position[1]
+        
+        wnd_nome.geometry(f'{child_width}x{child_height} + {child_pos_x} + {child_pos_y}')
+        
     
     #Janela principal
     #-------------------------------------------------------------------------------------------    
@@ -34,27 +46,36 @@ class BibliotecaAPP:
         
         #Criando elementos pagina home
         # btn_open_cadastro = ttk.Button(self.root, text='Cadastro', command=self.abrir_cadastro_wnd)
-        btn_open_cadastro = ctk.CTkButton(self.root, text='Cadastro', command=self.abrir_cadastro_wnd)
-        btn_open_pesquisa_wnd = ctk.CTkButton(self.root,text='Pesquisar')
+        main_frame = ctk.CTkFrame(self.root)
+        btn_open_cadastro = ctk.CTkButton(main_frame, text='Cadastro', command=self.abrir_cadastro_wnd)
+        btn_open_pesquisa_wnd = ctk.CTkButton(main_frame,text='Pesquisar')
         
         #Mostrando elementos
-        btn_open_cadastro.grid(row=0,column=0,columnspan=2)
-        btn_open_pesquisa_wnd.grid(row=1,column=0,columnspan=2)
+        btn_open_cadastro.pack(pady= 0)
+        btn_open_pesquisa_wnd.pack(pady= 10)
+        # btn_open_cadastro.grid(row=0,column=0,columnspan=2)
+        # btn_open_pesquisa_wnd.grid(row=1,column=0,columnspan=2)
+        main_frame.pack(pady = 100)
+        
     
     #Janelas
     #---------------------------------------------------------------------------------------------------------
     #Janela de cadastro livro e membro
     #Janela cadastro
     def abrir_cadastro_wnd(self):
-        cadastro_wnd = ctk.CTkToplevel(self.root)   
+        cadastro_wnd = ctk.CTkToplevel(self.root) 
+        self.configurar_child_wnd(cadastro_wnd)  
         cadastro_wnd.title('Biblioteca cadastro')
         self.configurar_child_wnd(cadastro_wnd)
         
         #Conteúdo cadastro
-        cadastro_notebook = ctk.CTkTabview(cadastro_wnd,width=320,height=190)
+        cadastro_tab = ctk.CTkTabview(cadastro_wnd)
+        tab_cad_membro = cadastro_tab.add('cad_membro')
+        tab_cad_livro = cadastro_tab.add('cad_livro')
+        # cadastro_notebook = ctk.CTkTabview(cadastro_wnd,width=320,height=190)
         
-        tab_cad_membro = ctk.CTkFrame(cadastro_notebook)
-        tab_cad_livro = ctk.CTkFrame(cadastro_notebook)
+        # tab_cad_membro = ctk.CTkFrame(cadastro_notebook)
+        # tab_cad_livro = ctk.CTkFrame(cadastro_notebook)
         
         #Tab cadastro membro:
         #config elementros
@@ -89,10 +110,11 @@ class BibliotecaAPP:
         lbl_cad_livro_result.grid(row=3,column=0,columnspan=2)
         
         #Exbir contúdo tela de cadastro
-        cadastro_notebook.add(tab_cad_membro,text='Cadastro Membro')
-        cadastro_notebook.add(tab_cad_livro,text='Cadastro Livro')
+        # cadastro_notebook.add(tab_cad_membro,text='Cadastro Membro')
+        # cadastro_notebook.add(tab_cad_livro,text='Cadastro Livro')
         
-        cadastro_notebook.pack()
+        # cadastro_notebook.pack()
+        cadastro_tab.pack()
      
     def abrir_pesquisa_wnd(self):
         pesquisa_wnd = tk.Toplevel(self.root)
