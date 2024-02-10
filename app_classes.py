@@ -1,5 +1,3 @@
-from cls_utilidades import Utilidades
-
 class Item:
     def __init__(self,id:str) -> None:
         self._id = id
@@ -197,21 +195,9 @@ class Biblioteca:
             return(-1,'Livro id digitado não encontrado não digitado incorretamente')
         
         self.atulizar_status_livro(lst_livro[0].id,False)       
+        return(1,f'o livro {lst_livro[0].titulo} foi devolvido pelo usuário {lst_membro[0].nome}')   
             
-            
-            
-        
-    # def devolver_livro(self,data_devo:str,livro:Livro,membro:Membro) ->None:
-    #     self.atulizar_status_livro(livro.id,False)
-    #     dict_devo = {
-    #         'data_devolucao':data_devo,
-    #         'id_livro':livro.id,
-    #         'livro_titulo':livro.titulo,
-    #         'id_membro':membro.id,
-    #         'nome_membro':membro.nome
-    #         }
-    #     self.devolucao_hist.append(dict_devo)
-           
+
    
         
 

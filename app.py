@@ -68,5 +68,4 @@ if __name__ == '__main__':
     for livro in lst_livros:
         b1.cadastrar_novo_livro(livro)
             
-            
     BibliotecaApp(b1,'TestClassAPP',(400,200))

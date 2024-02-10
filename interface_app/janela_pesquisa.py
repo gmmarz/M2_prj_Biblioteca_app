@@ -11,7 +11,7 @@ class JanelaPesquisa(tk.Toplevel):
         self.bibli_obj = bibli_obj
         
         #Configurar janela
-        self.configurar_janela('Pesquisa',(800,600))
+        self.configurar_janela('Pesquisa',(900,700))
         
         #Configurar widgets
         self.pesquisa_notebook = PesquisaNotebook(self,bibli_obj)
@@ -122,7 +122,7 @@ class TabMembroResultado(ttk.Frame):
         self.tree_membros.heading('nome',text='nome')
         self.tree_membros.heading('hist_livros',text='hist_livros')
         
-        self.tree_membros.grid(row=0,column=0)
+        self.tree_membros.pack(side='left',fill='both',expand=True)
     
     def configurar_layout(self):
         self.configure(relief='solid',border=1,borderwidth=1)
@@ -241,7 +241,7 @@ class TabLivroResultado(ttk.Frame):
         self.tree_livros.heading('autor',text='autor')
         self.tree_livros.heading('emprestado',text='emprestado')
         
-        self.tree_livros.grid(row=0,column=0)
+        self.tree_livros.pack(side='left',fill='both',expand=True)
     
     def configurar_layout(self):
         self.configure(relief='solid',border=1,borderwidth=1)
