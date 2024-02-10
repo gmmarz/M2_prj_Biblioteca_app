@@ -23,27 +23,46 @@ class CadastroNotebook(ttk.Notebook):
     def __init__(self,parent_wnd:tk.Toplevel,bibli_obj:Biblioteca):
         super().__init__(parent_wnd)
         
+        #Biblioteca obj
         self.bilbli_obj = bibli_obj
+        
+        #Configurar layout
+        self.configurar_layout()
+        
+        #Criar widget
+        self.criar_widgets_membro()
+        self.add(self.tab_membro,text='Cadastro Membro')
+        
+        self.criar_widgets_livro()
+        self.add(self.tab_livro,text='Cadastro Livro')
                 
-        self.pack()
-        
-        self.criar_widgets()
-        
-        self.add(self.tab_cadastro,text='Cadastro Membro')
+        #Posicionamento
+        self.grid(row=0, column=0)
     
-    def criar_widgets(self):
-        self.tab_cadastro = TabCadastro(self,self.bilbli_obj)
+    def configurar_layout(self):
+        self.configure(width=400,height=150)
     
-class TabCadastro(ttk.Frame):
+    def criar_widgets_membro(self):
+        self.tab_membro = TabMembro(self,self.bilbli_obj)
+        
+    def criar_widgets_livro(self):
+        self.tab_livro = TabLivro(self,self.bilbli_obj)
+    
+class TabMembro(ttk.Frame):
     def __init__(self,parent_obj:CadastroNotebook,bibli_obj:Biblioteca) -> None:
         super().__init__(parent_obj)
-        self.parent_obj = parent_obj
         
+        #Atributos
+        self.parent_obj = parent_obj
+        self.bibli_obj = bibli_obj
         self.novo_membro_nome = tk.StringVar()
         self.wnd_cad_membro_result = tk.StringVar()
         
-        self.pack()
+        #Criar widgets
         self.criar_widgets()
+        
+        #Posicionar
+        self.pack()
         
     def criar_widgets(self):
         
@@ -70,4 +89,50 @@ class TabCadastro(ttk.Frame):
     def but_clear_membro_wnd(self):
         self.novo_membro_nome.set('')
         self.wnd_cad_membro_result.set('')
+
+class TabLivro(ttk.Frame):
+    def __init__(self,parent_obj:CadastroNotebook,bibli_obj:Biblioteca):
+        super().__init__(parent_obj)
         
+        #Atributos
+        self.parent_obj = parent_obj
+        self.bibli_obj = bibli_obj
+        
+        self.novo_titulo = tk.StringVar()
+        self.novo_autor = tk.StringVar()
+        self.wnd_cad_livro_result = tk.StringVar()
+        
+        #Widgets
+        self.criar_widgets()
+    
+    
+    def criar_widgets(self):
+        #Configurar elementos
+        lbl_tituo = ttk.Label(master=self,text='Titulo:')
+        tx_in_novo_titulo = ttk.Entry(master=self,textvariable=self.novo_titulo)
+        lbl_autor = ttk.Label(master=self,text='Autor:')
+        tx_in_novo_autor = ttk.Entry(master=self,textvariable=self.novo_autor)
+        
+        btn_cad_livro = ttk.Button(master=self,text='Cadastrar Livro',command=self.but_cadastrar_livro)
+        lbl_result_livro = ttk.Label(master=self,textvariable=self.wnd_cad_livro_result)
+        
+        #Posicionar os elementos
+        lbl_tituo.grid(row=0,column=0,padx=3,pady=3)
+        tx_in_novo_titulo.grid(row=0,column=1,columnspan=2,padx=3,pady=3)
+        lbl_autor.grid(row=1,column=0,padx=3,pady=3)
+        tx_in_novo_autor.grid(row=1,column=1,columnspan=2,padx=3,pady=3)
+        btn_cad_livro.grid(row=2,column=1,columnspan=2,padx=3,pady=3)
+        lbl_result_livro.grid(row=3,column=1,columnspan=2,padx=3,pady=3)
+    
+    #Metodos para cadastro livro na biblioteca
+    def but_cadastrar_livro(self):
+        novo_livro_inf = {'titulo': self.novo_titulo.get(),'autor':self.novo_autor.get()}
+        cad_result = self.bibli_obj.cadastrar_novo_livro(novo_livro_inf)
+        self.wnd_cad_livro_result.set(cad_result[1])
+        self.novo_autor.set('')
+        self.novo_titulo.set('')
+        
+
+if __name__ == '__main__':
+    print('Este é um modulo e não deve ser executado diretamente')
+    print('Executar o app.py')

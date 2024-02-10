@@ -50,7 +50,7 @@ class Biblioteca:
     def __init__(self) -> None:
         self.catalago :list[Livro ]= []
         self.membros :list[Membro]  = []
-        self.devolucao_hist : list[dict] = []
+        # self.devolucao_hist : list[dict] = []
         
     def get_last_id(self,lst_items:list[Item]) -> str:
         
@@ -95,7 +95,7 @@ class Biblioteca:
         membros_encontrados: list[Membro] = []
         
         for membro in self.membros:
-            if valor_pesquisa in membro.id or valor_pesquisa in membro.nome:
+            if valor_pesquisa.lower() in membro.id.lower() or valor_pesquisa.lower() in membro.nome.lower():
                 membros_encontrados.append(membro) 
         return membros_encontrados
     
@@ -137,18 +137,35 @@ class Biblioteca:
 
     def pesquisar_livros(self,valor_pesquisa:str)->list[Livro]:
         livros_encontrados : list[Livro] = []
+        livro_status = ''
         for livro in self.catalago:
-            if valor_pesquisa in livro.id or valor_pesquisa in livro.titulo or valor_pesquisa in livro.autor:
+            if livro.esta_emprestado:
+                livro_status = 'True'
+            else:
+                livro_status = 'False'
+            if valor_pesquisa.lower() in livro.id.lower() or valor_pesquisa.lower() in livro.titulo.lower() or valor_pesquisa.lower() in livro.autor.lower() or valor_pesquisa.lower() in livro_status.lower():
                 livros_encontrados.append(livro)
         return livros_encontrados
     
-    def atulizar_status_livro(self,id_livro:str,foi_emprestado:bool)->None:
+    def atulizar_status_livro(self,livro_id:str,foi_emprestado:bool)->None:
         for index,livro in enumerate(self.catalago):
-            if id_livro == livro.id:
+            if livro_id == livro.id:
                 self.catalago[index].esta_emprestado = foi_emprestado
                 break
     
-    def emprestar_livro(self,membro:Membro,livro:Livro)->tuple:
+    def emprestar_livro(self,membro_id:str,livro_id:str)->tuple:
+        
+        lst_membro:list[Membro] = self.pesquisar_membros(membro_id)
+        lst_livro:list[Livro] = self.pesquisar_livros(livro_id)
+              
+        if not len(lst_membro)== 1 :
+            return(-1,'Usuário id não encontrado digitado incorretamente')
+        
+        if not len(lst_livro)==1:
+            return(-1,'Livro id digitado não encontrado não digitado incorretamente')
+        
+        livro:Livro = lst_livro[0]
+        membro:Membro = lst_membro[0]
         
         if livro.esta_emprestado:
             return (-1,f'livro {livro.titulo} não está disponível')
@@ -169,16 +186,31 @@ class Biblioteca:
            print(f'Auto:{livro.autor}')
            print(f'Está emprestado: {livro.esta_emprestado}')
      
-    def devolver_livro(self,data_devo:str,livro:Livro,membro:Membro) ->None:
-        self.atulizar_status_livro(livro.id,False)
-        dict_devo = {
-            'data_devolucao':data_devo,
-            'id_livro':livro.id,
-            'livro_titulo':livro.titulo,
-            'id_membro':membro.id,
-            'nome_membro':membro.nome
-            }
-        self.devolucao_hist.append(dict_devo)
+    def devolver_livro(self,livro_id:str,membro_id:str) -> tuple:
+        lst_membro:list[Membro] = self.pesquisar_membros(membro_id)
+        lst_livro:list[Livro] = self.pesquisar_livros(livro_id)
+        
+        if not len(lst_membro)== 1 :
+            return(-1,'Usuário id não encontrado digitado incorretamente')
+        
+        if not len(lst_livro)==1:
+            return(-1,'Livro id digitado não encontrado não digitado incorretamente')
+        
+        self.atulizar_status_livro(lst_livro[0].id,False)       
+            
+            
+            
+        
+    # def devolver_livro(self,data_devo:str,livro:Livro,membro:Membro) ->None:
+    #     self.atulizar_status_livro(livro.id,False)
+    #     dict_devo = {
+    #         'data_devolucao':data_devo,
+    #         'id_livro':livro.id,
+    #         'livro_titulo':livro.titulo,
+    #         'id_membro':membro.id,
+    #         'nome_membro':membro.nome
+    #         }
+    #     self.devolucao_hist.append(dict_devo)
            
    
         
