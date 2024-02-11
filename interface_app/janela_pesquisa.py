@@ -11,7 +11,7 @@ class JanelaPesquisa(tk.Toplevel):
         self.bibli_obj = bibli_obj
         
         #Configurar janela
-        self.configurar_janela('Pesquisa',(900,700))
+        self.configurar_janela('Pesquisa',(900,850))
         
         #Configurar widgets
         self.pesquisa_notebook = PesquisaNotebook(self,bibli_obj)
@@ -40,7 +40,7 @@ class PesquisaNotebook(ttk.Notebook):
         self.grid(row=0, column=0)
         
     def configurar_layout(self):
-        self.configure(width=800, height=600)
+        self.configure(width=900, height=700)
         
     def criar_widgets(self):
         #Criando Widgets
@@ -181,7 +181,7 @@ class TabLivroPesquisa(ttk.Frame):
         self.criar_widgets()
         
         #Posicionar
-        self.pack()
+        self.pack(side='left',fill='both')
         
     def configurar_layout(self):
         self.configure(relief='solid',border=1,borderwidth=1)
@@ -269,7 +269,7 @@ class TabLivroMenuAcoes(ttk.Frame):
         #configurando os elementos
         btn_pegar_livros_info = ttk.Button(master=self,text='Listar livros',command=lambda: self.parent_obj.pegar_informacoes_livro(self.frame_resultado.tree_livros))
         lbl_item_pesquisar = ttk.Label(master=self,text='Pesquisa')
-        lbl_opcoes_pesquisa = ttk.Label(master=self,text='Id/Nome')
+        lbl_opcoes_pesquisa = ttk.Label(master=self,text='Id/Nome/Status')
         tx_in_pesquisa = ttk.Entry(master=self,textvariable=self.livro_inf_pesquisa)
         btn_pesquisar_item = ttk.Button(master=self,text='Pesquisar',command=lambda: self.parent_obj.pesquisar_item_livro(self.frame_resultado.tree_livros,self.livro_inf_pesquisa.get()))
         
