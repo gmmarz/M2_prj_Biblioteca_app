@@ -198,6 +198,10 @@ class Biblioteca:
         return(1,f'o livro {lst_livro[0].titulo} foi devolvido pelo usuário {lst_membro[0].nome}')   
             
 
+if __name__ == '__main__':
+    print('Este arquivo é um módulo e não deve ser executado diretamente')
+    print('Executar app.py')
+
    
         
 

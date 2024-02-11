@@ -283,3 +283,8 @@ class TabLivroMenuAcoes(ttk.Frame):
     
     def configurar_layout(self):
         self.configure(relief='solid',border=1,borderwidth=1)
+        
+        
+if __name__ == '__main__':
+    print('Este arquivo é um módulo e não deve ser executado diretamente')
+    print('Executar app.py')

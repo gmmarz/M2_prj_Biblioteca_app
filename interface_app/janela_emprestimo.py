@@ -114,4 +114,6 @@ class FrameDevolucao(ttk.Frame):
         self.devolucao_result.set(result[1])       
 
 
-
+if __name__ == '__main__':
+    print('Este arquivo é um módulo e não deve ser executado diretamente')
+    print('Executar app.py')
